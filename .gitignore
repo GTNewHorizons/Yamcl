@@ -5,3 +5,5 @@ eclipse/
 .gradle/
 .project
 .settings/
+Build.lnk
+bin/
