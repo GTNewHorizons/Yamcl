@@ -1,5 +1,6 @@
 package eu.usrv.yamcl.auxiliary;
 
+import eu.usrv.yamcl.Yamcl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -29,8 +30,8 @@ public class WorldHelper {
 		}
 		catch (Exception e)
 		{
-			LogHelper.error(String.format("Error while looking for EntityPlayer with Name %s", pName));
-			LogHelper.DumpStack(e);
+			Yamcl.instance.getLogger().error(String.format("Error while looking for EntityPlayer with Name %s", pName));
+			Yamcl.instance.getLogger().DumpStack(e);
 		}
 		return tEP;
 	}

@@ -12,8 +12,8 @@ import net.minecraftforge.common.config.Configuration;
 
 import org.apache.commons.io.FileUtils;
 
+import eu.usrv.yamcl.Yamcl;
 import eu.usrv.yamcl.auxiliary.LogHelper;
-import eu.usrv.yamcl.auxiliary.Reference;
 
 /**
  * config class to read/setup config files and folders
@@ -22,6 +22,8 @@ import eu.usrv.yamcl.auxiliary.Reference;
 public abstract class ConfigManager {
 	private File _mainconfigDir = null;
 	private File _blocksconfigDir = null;
+	private String _mModCollection = "";
+	private String _mModID = "";
 	
 	protected Configuration _mainConfig = null;
 
@@ -33,8 +35,10 @@ public abstract class ConfigManager {
 	 protected abstract void PostInit();
 	 
 	 
-	 public ConfigManager(File pConfigBaseDirectory)
+	 public ConfigManager(File pConfigBaseDirectory, String pModCollectionDirectory, String pModID)
 	 {
+		 _mModCollection = pModCollectionDirectory;
+		 _mModID = pModID;
 		 _mConfigBaseDirectory = pConfigBaseDirectory;
 	 }
 	 
@@ -55,7 +59,7 @@ public abstract class ConfigManager {
 			 Init();
 			 
 			 DoDebugMessages = _mainConfig.getBoolean("DoDebugMessages", "Debug", false, "Enable debug output to fml-client-latest.log");
-			 LogHelper.setDebugOutput(DoDebugMessages);
+			 Yamcl.instance.getLogger().setDebugOutput(DoDebugMessages);
 			 _mainConfig.save();
 			 
 			 PostInit();
@@ -66,8 +70,8 @@ public abstract class ConfigManager {
 		 }
 		 catch (Exception e)
 		 {
-			 LogHelper.error("Unable to init config file");
-			 LogHelper.DumpStack(e);
+			 Yamcl.instance.getLogger().error("Unable to init config file");
+			 Yamcl.instance.getLogger().DumpStack(e);
 			 return false;
 		 }
 	 }
@@ -81,16 +85,16 @@ public abstract class ConfigManager {
 	 */
 	private void InitConfigDirs()
 	 {
-		 LogHelper.info("Checking/creating config folders");
+		Yamcl.instance.getLogger().info("Checking/creating config folders");
 		 
-		 _mainconfigDir = new File(String.format("%s%s%s", _mConfigBaseDirectory, File.separator, Reference.COLLECTIONNAME));
+		 _mainconfigDir = new File(String.format("%s%s%s", _mConfigBaseDirectory, File.separator, _mModCollection));
 	 
 	    if(!_mainconfigDir.exists()) {
-	    	LogHelper.info("Config folder not found. Creating...");
+	    	Yamcl.instance.getLogger().info("Config folder not found. Creating...");
 	    	_mainconfigDir.mkdir();
 	    }
 	    
-	    File tRealConfigFile = new File(String.format("%s%s%s%s", _mainconfigDir, File.separator, Reference.MODID, ".cfg"));
+	    File tRealConfigFile = new File(String.format("%s%s%s%s", _mainconfigDir, File.separator, _mModID, ".cfg"));
     
 	    _mainConfig = new Configuration(tRealConfigFile);
 	 }

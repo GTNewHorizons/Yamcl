@@ -2,6 +2,7 @@ package eu.usrv.yamcl.auxiliary;
 
 import java.util.List;
 
+import eu.usrv.yamcl.Yamcl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -20,7 +21,7 @@ public class EntityHelper {
 	 */
 	public static void DealDamageToEntitiesInRange(EntityPlayer pEntityPlayer, int pRange, Class pTargetEntityClass, int pDamageToDeal)
 	{
-		LogHelper.debug("TriggerNeutralMobs called");
+		Yamcl.instance.getLogger().debug("TriggerNeutralMobs called");
 		int tAggroRange = 16;
 		List<Entity> tEntities = null;
 		
@@ -48,8 +49,8 @@ public class EntityHelper {
 		}
 		catch(Exception e)
 		{
-			LogHelper.error("EntityHelper.DealDamageToEntitiesInRange.Error", "Error while processing DealDamageToEntitiesInRange");
-			LogHelper.DumpStack("EntityHelper.DealDamageToEntitiesInRange.Error.StackTrace", e);
+			Yamcl.instance.getLogger().error("EntityHelper.DealDamageToEntitiesInRange.Error", "Error while processing DealDamageToEntitiesInRange");
+			Yamcl.instance.getLogger().DumpStack("EntityHelper.DealDamageToEntitiesInRange.Error.StackTrace", e);
 		}	
 	}
 }

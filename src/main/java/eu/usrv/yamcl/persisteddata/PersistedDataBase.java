@@ -19,9 +19,9 @@ import java.util.Map;
 
 import com.google.common.io.Files;
 
+import eu.usrv.yamcl.Yamcl;
 import eu.usrv.yamcl.auxiliary.IntHelper;
 import eu.usrv.yamcl.auxiliary.LogHelper;
-import eu.usrv.yamcl.auxiliary.Reference;
 import eu.usrv.yamcl.auxiliary.TimeHelper;
 import eu.usrv.yamcl.iface.IPersistedDataBase;
 
@@ -36,37 +36,36 @@ public class PersistedDataBase implements IPersistedDataBase {
 	private String _mBufferFileName;
 	private File _mConfigBaseDirectory;
 	private long _mLastSave;
-	
+	private LogHelper _mLog = Yamcl.instance.getLogger();
+	private String _mModCollection = "";
 	
 	/**
 	 * Init persistent storage file. It needs the base directory and a filename 
 	 * @param pConfigBaseDirectory
 	 * @param pBufferFileName
 	 */
-	public PersistedDataBase(File pConfigBaseDirectory, String pBufferFileName)
+	public PersistedDataBase(File pConfigBaseDirectory, String pBufferFileName, String pModCollectionDirectory)
 	{
 		_mConfigBaseDirectory = pConfigBaseDirectory;
 		_mBufferFileName = pBufferFileName;
 		_mDataStorage = new HashMap<String, String>();
-		
+		 _mModCollection = pModCollectionDirectory;
+		 
 		_mLastSave = TimeHelper.GetCurrentTimestamp();
 	}
 	
 
-	/* (non-Javadoc)
-	 * @see com.github.namikon.angermod.persisteddata.IPersistedDataBase#setValue(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public void setValue(String pConfigName, String pConfigValue)
 	{
-		LogHelper.debug(String.format("Setting persisted config [%s] to value [%s]", pConfigName, pConfigValue));
+		_mLog.debug(String.format("Setting persisted config [%s] to value [%s]", pConfigName, pConfigValue));
 		
 		_mDataStorage.put(pConfigName, pConfigValue);
 		
 		long tCurrent = TimeHelper.GetCurrentTimestamp();
 		if (tCurrent - _mLastSave > 30) // Save every 30 seconds, if changes occour
 		{
-			LogHelper.info("Saving local storage file as 30 seconds have passed");
+			_mLog.info("Saving local storage file as 30 seconds have passed");
 			Save();
 			_mLastSave = TimeHelper.GetCurrentTimestamp();
 		}
@@ -109,7 +108,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 	// TODO: Move this to some global location!
 	private String getStorageFileName()
 	{
-		return String.format("%s%s%s%s%s", _mConfigBaseDirectory, File.separator, Reference.COLLECTIONNAME, File.separator, _mBufferFileName);
+		return String.format("%s%s%s%s%s", _mConfigBaseDirectory, File.separator, _mModCollection, File.separator, _mBufferFileName);
 	}
 	
 	/* (non-Javadoc)
@@ -125,7 +124,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 		{
 			if (tInputFile.exists())
 			{
-				LogHelper.info("Creating backup of currently working storage file...");
+				_mLog.info("Creating backup of currently working storage file...");
 				File tBackupFile = new File(tInputFile.getAbsolutePath() + ".backup");
 				if (tBackupFile.exists())
 					tBackupFile.delete();
@@ -133,7 +132,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 				try {
 					Files.copy(tInputFile, tBackupFile);
 				} catch (IOException e) {
-					LogHelper.error("Unable to create backup of storage file");
+					_mLog.error("Unable to create backup of storage file");
 					e.printStackTrace();
 				}
 			}
@@ -145,11 +144,11 @@ public class PersistedDataBase implements IPersistedDataBase {
 	private boolean LoadFile(File pInputFile)
 	{
 		boolean tResult = false;
-		LogHelper.debug("Loading persisted storage file...");
+		_mLog.debug("Loading persisted storage file...");
 		
 		if (!pInputFile.exists())
 		{
-			LogHelper.info("Persisted storage file does not exist. Creating a new one");
+			_mLog.info("Persisted storage file does not exist. Creating a new one");
 			Save();
 		}
 		

@@ -1,5 +1,6 @@
 package eu.usrv.yamcl.auxiliary;
 
+import eu.usrv.yamcl.Yamcl;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
@@ -41,8 +42,8 @@ public class PlayerHelper {
 		}
 		catch (Exception e)
 		{
-			LogHelper.error("RemoveProtection failed to Remove player's protection");
-			LogHelper.DumpStack(e);
+			Yamcl.instance.getLogger().error("RemoveProtection failed to Remove player's protection");
+			Yamcl.instance.getLogger().DumpStack(e);
 		}
 	}
 	
@@ -62,8 +63,8 @@ public class PlayerHelper {
 		}
 		catch (Exception e)
 		{
-			LogHelper.error("RemoveProtection failed to give a player protection");
-			LogHelper.DumpStack(e);
+			Yamcl.instance.getLogger().error("RemoveProtection failed to give a player protection");
+			Yamcl.instance.getLogger().DumpStack(e);
 		}
 	}
 }
