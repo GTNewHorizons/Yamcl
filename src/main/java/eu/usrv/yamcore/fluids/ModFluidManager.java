@@ -14,6 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.creativetabs.CreativeTabsManager;
+import eu.usrv.yamcore.events.BucketHandler;
 import eu.usrv.yamcore.items.ModSimpleBaseItem;
 
 public class ModFluidManager {
@@ -72,27 +73,31 @@ public class ModFluidManager {
 					CreativeTabs tTargetTab = pTabManager.GetCreativeTabInstance(modFluid.getCreativeTabName());
 					if (tTargetTab == null)
 					{
+						tTargetTab = CreativeTabs.tabMisc;
 						_mLog.warn(String.format("CreativeTab name %s requested, but not registered in TabManager. Adding fluid %s to Tab 'Misc'", modFluid.getCreativeTabName(), modFluid.getUnlocalizedName()));
-						modFluid.setCreativeTab(CreativeTabs.tabMisc);
 					}
-					else
-					{
-						_mLog.info("Setting tab");
-						modFluid.setCreativeTab(tTargetTab);
-					}
+					modFluid.setCreativeTab(tTargetTab);
 					
 					Fluid tFluid = modFluid.getFluid();
+					String tUnlocFluidName = tFluid.getUnlocalizedName().substring(6); // Remove fluid.
+					modFluid.SetTextures(_mModID, tUnlocFluidName);
+					modFluid.setBlockName(tUnlocFluidName);
+					
 					_mLog.info(String.format("FluidBlock: %s Fluid: %s", modFluid.getUnlocalizedName(), tFluid.getUnlocalizedName()));
 
 					
 					Item fluidBucket = new ModBucketItem(modFluid);
-					fluidBucket.setUnlocalizedName(tFluid.getUnlocalizedName() + "_bucket").setContainerItem(Items.bucket);
+					fluidBucket.setUnlocalizedName(tUnlocFluidName + "_bucket").setContainerItem(Items.bucket);
+					fluidBucket.setTextureName(String.format("%s:item%s_bucket", _mModID, tUnlocFluidName));
+					fluidBucket.setCreativeTab(tTargetTab);
 					
 					FluidContainerRegistry.registerFluidContainer(tFluid, new ItemStack(fluidBucket), new ItemStack(Items.bucket));
-					tFluid.setUnlocalizedName(modFluid.getUnlocalizedName());
-
+					
 					GameRegistry.registerBlock(modFluid, _mModID + "_" + modFluid.getUnlocalizedName().substring(5));
-					GameRegistry.registerItem(fluidBucket, "yourBucket");
+					GameRegistry.registerItem(fluidBucket, _mModID + "_" + fluidBucket.getUnlocalizedName().substring(5));
+					tFluid.setUnlocalizedName(tUnlocFluidName);
+					
+					BucketHandler.INSTANCE.buckets.put(modFluid, fluidBucket);
 				}
 				catch (Exception e)
 				{
@@ -110,5 +115,14 @@ public class ModFluidManager {
 			_mLog.DumpStack(e);
 			return false;
 		}
+	}
+	
+	public static Fluid GetNewFluid(String pFluidName)
+	{
+		Fluid tFluid = new Fluid(pFluidName);
+		if (!FluidRegistry.registerFluid(tFluid))
+			return null;
+		else
+			return tFluid;
 	}
 }

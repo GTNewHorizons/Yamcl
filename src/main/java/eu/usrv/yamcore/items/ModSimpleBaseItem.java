@@ -43,12 +43,14 @@ public class ModSimpleBaseItem {
 	
 	public void setModIDName(String pModID)
 	{
+		
 		String tTextureName = "";
-		if (_mTextureOverride.length() == 0)
+		if (_mTextureOverride.length() < 1)
 			tTextureName = String.format("%s:item%s", pModID, _mName);
 		else
 			tTextureName = String.format("%s:%s", pModID, _mTextureOverride);
 		
+		_mItemInstance.setTextureName(tTextureName);
 		_mFullyPopulated = true;
 	}
 

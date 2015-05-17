@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import eu.usrv.yamcore.auxiliary.*;
+import eu.usrv.yamcore.events.BucketHandler;
 import eu.usrv.yamcore.iface.IPersistedDataBase;
 import eu.usrv.yamcore.persisteddata.PersistedDataBase;
 
@@ -39,7 +40,7 @@ public class YAMCore {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		
+		MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
 	}
 	
 	@EventHandler

@@ -29,13 +29,11 @@ public class ModSimpleBaseFluid extends BlockFluidClassic {
 	/** 
 	 * Set the textures used to indicate still and liquid/flowing state
 	 * @param pModID ModID String, used to locate the resources
-	 * @param pTextureStill Texture for still fluid
-	 * @param pTextureFlowing Texture for flowing fluid
 	 */
-	public void SetTextures(String pModID, String pTextureStill, String pTextureFlowing)
+	public void SetTextures(String pModID, String pFluidName)
 	{
-		_mTxtStill = pTextureStill;
-		_mTxtFlow = pTextureFlowing;
+		_mTxtStill = String.format("%s:fluid%s_still", pModID, pFluidName);
+		_mTxtFlow = String.format("%s:fluid%s_flow", pModID, pFluidName);
 	}
 	boolean _mCanDisplaceFluids = false;
 	
@@ -79,6 +77,11 @@ public class ModSimpleBaseFluid extends BlockFluidClassic {
 			return _mCanDisplaceFluids;
 		else
 			return super.displaceIfPossible(world, x, y, z);
+	}
+	
+	public void setCreativeTabName(String pTabName)
+	{
+		_mCreativeTab = pTabName;
 	}
 	
 	public String getCreativeTabName()
