@@ -41,7 +41,18 @@ public class ModSimpleBaseItem {
 		this(pItemName, "", pCreativeTabName);
 	}
 	
+	public void setModIDName(String pModID)
+	{
+		String tTextureName = "";
+		if (_mTextureOverride.length() == 0)
+			tTextureName = String.format("%s:item%s", pModID, _mName);
+		else
+			tTextureName = String.format("%s:%s", pModID, _mTextureOverride);
+		
+		_mFullyPopulated = true;
+	}
 
+	
 	public Item getConstructedItem()
 	{
 		if (!_mFullyPopulated)
