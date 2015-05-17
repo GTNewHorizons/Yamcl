@@ -1,13 +1,16 @@
 package eu.usrv.yamcore.fluids;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
@@ -61,6 +64,8 @@ public class ModSimpleBaseFluid extends BlockFluidClassic {
 	public void registerBlockIcons(IIconRegister register) {
 		stillIcon = register.registerIcon(_mTxtStill);
 		flowingIcon = register.registerIcon(_mTxtFlow);
+		
+		super.getFluid().setIcons(stillIcon, flowingIcon);
 	}
       
 	@Override
