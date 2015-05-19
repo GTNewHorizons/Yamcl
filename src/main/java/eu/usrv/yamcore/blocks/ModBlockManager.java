@@ -63,7 +63,6 @@ public class ModBlockManager {
 			{
 				try
 				{
-					_mLog.info("Getting tab");
 					CreativeTabs tTargetTab = pTabManager.GetCreativeTabInstance(modBlock.getCreativeTabName());
 					if (tTargetTab == null)
 					{
@@ -72,13 +71,12 @@ public class ModBlockManager {
 					}
 					else
 					{
-						_mLog.info("Setting tab");
 						modBlock.setCreativeTab(tTargetTab);
 					}
 					
 					BlockBase modBlockBlock = modBlock.getConstructedBlock();
 					String unlocName = modBlockBlock.getUnlocalizedName();
-					_mLog.info(String.format("Block: %s BlockName: %s", modBlockBlock, unlocName));
+					_mLog.debug(String.format("Block: %s BlockName: %s", modBlockBlock, unlocName));
 					
 					GameRegistry.registerBlock(modBlock.getConstructedBlock(), modBlock.getConstructedBlock().getUnlocalizedName());
 				}

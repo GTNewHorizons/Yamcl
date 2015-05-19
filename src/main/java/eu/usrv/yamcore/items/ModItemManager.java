@@ -64,7 +64,6 @@ public class ModItemManager {
 			{
 				try
 				{
-					_mLog.info("Getting tab");
 					CreativeTabs tTargetTab = pTabManager.GetCreativeTabInstance(modItem.getCreativeTabName());
 					if (tTargetTab == null)
 					{
@@ -73,13 +72,12 @@ public class ModItemManager {
 					}
 					else
 					{
-						_mLog.info("Setting tab");
 						modItem.setCreativeTab(tTargetTab);
 					}
 					
 					Item modItemItem = modItem.getConstructedItem();
 					String unlocName = modItemItem.getUnlocalizedName();
-					_mLog.info(String.format("Item: %s ItemName: %s", modItemItem, unlocName));
+					_mLog.debug(String.format("Item: %s ItemName: %s", modItemItem, unlocName));
 					
 					GameRegistry.registerItem(modItem.getConstructedItem(), modItem.getConstructedItem().getUnlocalizedName());
 				}

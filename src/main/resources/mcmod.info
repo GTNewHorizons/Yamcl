@@ -3,7 +3,7 @@
   "modid": "YAMCore",
   "name": "YAMCore",
   "description": "Yet another ModdingCore, for all your general-purpose modding needs",
-  "version": "0.2 Beta",
+  "version": "0.3",
   "mcversion": "1.7.10",
   "url": "",
   "updateUrl": "",

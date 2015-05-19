@@ -69,7 +69,6 @@ public class ModFluidManager {
 			{
 				try
 				{
-					_mLog.info("Getting tab");
 					CreativeTabs tTargetTab = pTabManager.GetCreativeTabInstance(modFluid.getCreativeTabName());
 					if (tTargetTab == null)
 					{
@@ -83,7 +82,7 @@ public class ModFluidManager {
 					modFluid.SetTextures(_mModID, tUnlocFluidName);
 					modFluid.setBlockName(tUnlocFluidName);
 					
-					_mLog.info(String.format("FluidBlock: %s Fluid: %s", modFluid.getUnlocalizedName(), tFluid.getUnlocalizedName()));
+					_mLog.debug(String.format("FluidBlock: %s Fluid: %s", modFluid.getUnlocalizedName(), tFluid.getUnlocalizedName()));
 
 					
 					Item fluidBucket = new ModBucketItem(modFluid);
