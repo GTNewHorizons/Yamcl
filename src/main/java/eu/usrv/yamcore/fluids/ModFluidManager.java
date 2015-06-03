@@ -3,6 +3,7 @@ package eu.usrv.yamcore.fluids;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,7 +36,7 @@ public class ModFluidManager {
 	 */
 	public ModSimpleBaseFluid GetModFluid(ModSimpleBaseFluid pModItem)
 	{
-		return GetModFluid(pModItem.getUnlocalizedName());
+		return GetModFluid(pModItem.getFluid().getUnlocalizedName());
 	}
 	
 	public ModSimpleBaseFluid GetModFluid(String pModItemName)
@@ -50,11 +51,15 @@ public class ModFluidManager {
 	{
 		if (GetModFluid(pModFluid) == null)
 		{
-			FluidCollection.put(pModFluid.getUnlocalizedName(), pModFluid);
+			FluidCollection.put(pModFluid.getFluid().getUnlocalizedName(), pModFluid);
+			_mLog.debug(String.format("Adding Fluid to managed registry: %s", pModFluid.getFluid().getUnlocalizedName()));
 			return true;
 		}
 		else
+		{
+			_mLog.debug(String.format("Not adding Fluid to managed registry, since it's already registered! > %s", pModFluid.getFluid().getUnlocalizedName()));
 			return false;
+		}
 	}
 	
 	/**
@@ -78,6 +83,12 @@ public class ModFluidManager {
 					modFluid.setCreativeTab(tTargetTab);
 					
 					Fluid tFluid = modFluid.getFluid();
+					if (tFluid == null)
+					{
+						_mLog.error(String.format("Unable to grab fluid for preregistered modFluid %s", modFluid.getUnlocalizedName()));
+						continue;
+					}
+					_mLog.debug(String.format("Grabbed fluid: %s Preparing to register...", tFluid.getUnlocalizedName()));
 					String tUnlocFluidName = tFluid.getUnlocalizedName().substring(6); // Remove fluid.
 					modFluid.SetTextures(_mModID, tUnlocFluidName);
 					modFluid.setBlockName(tUnlocFluidName);
@@ -92,7 +103,10 @@ public class ModFluidManager {
 					
 					FluidContainerRegistry.registerFluidContainer(tFluid, new ItemStack(fluidBucket), new ItemStack(Items.bucket));
 					
-					GameRegistry.registerBlock(modFluid, _mModID + "_" + modFluid.getUnlocalizedName().substring(5));
+					Block tB = GameRegistry.registerBlock(modFluid, _mModID + "_" + modFluid.getUnlocalizedName().substring(5));
+					if (tB == null)
+						_mLog.error(String.format("Failed to register fluidblock %s", modFluid.getUnlocalizedName()));
+					
 					GameRegistry.registerItem(fluidBucket, _mModID + "_" + fluidBucket.getUnlocalizedName().substring(5));
 					tFluid.setUnlocalizedName(tUnlocFluidName);
 					
@@ -120,8 +134,14 @@ public class ModFluidManager {
 	{
 		Fluid tFluid = new Fluid(pFluidName);
 		if (!FluidRegistry.registerFluid(tFluid))
+		{
+			YAMCore.instance.getLogger().error("Can't register fluid " + pFluidName + " to forge");
 			return null;
+		}
 		else
+		{
+			YAMCore.instance.getLogger().debug("Registered " + pFluidName + " to forge");
 			return tFluid;
+		}
 	}
 }
