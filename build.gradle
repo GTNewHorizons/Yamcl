@@ -17,13 +17,16 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.3"
+version = "1.7.10-0.3"
 group= "eu.usrv.YAMCore" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "YAMCore"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
     runDir = "eclipse"
+	
+	replaceIn "src/main/java/eu/usrv/yamcore/YAMCore.java"
+	replace "GRADLETOKEN_VERSION", project.version.split('-')[1]
 }
 
 dependencies {
@@ -44,6 +47,7 @@ dependencies {
 
 processResources
 {
+	def cleanVersion = project.version.split('-')[1]
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
@@ -53,7 +57,7 @@ processResources
         include 'mcmod.info'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version':cleanVersion, 'mcversion':project.minecraft.version
     }
         
     // copy everything else, thats not the mcmod.info

@@ -27,7 +27,7 @@ import eu.usrv.yamcore.persisteddata.PersistedDataBase;
  * @author Namikon
  *
  */
-@Mod(modid = "YAMCore", name = "YAMCore", version = "0.3")
+@Mod(modid = "YAMCore", name = "YAMCore", version = "GRADLETOKEN_VERSION")
 public class YAMCore {
 	private LogHelper _mLogger = new LogHelper("Yamcl");
 	
