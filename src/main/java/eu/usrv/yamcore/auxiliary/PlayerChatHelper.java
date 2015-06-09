@@ -12,9 +12,29 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public class PlayerChatHelper {
 	/**
+	 * Just plain white text without any format or color
+	 * @param pCommandSender
+	 * @param pMessage
+	 */
+	public static void SendPlain(ICommandSender pCommandSender, String pMessage)
+	{
+		pCommandSender.addChatMessage(new ChatComponentText(pMessage));
+	}
+	
+	/**
+	 * Just plain white text without any format or color
+	 * @param pPlayer
+	 * @param pMessage
+	 */
+	public static void SendPlain(EntityPlayer pPlayer, String pMessage)
+	{
+		pPlayer.addChatMessage(new ChatComponentText(pMessage));
+	}
+	
+	/**
 	 * Meant for notifications that are being send to an admin/op
 	 * Color will be GREEN
-	 * @param pPlayer
+	 * @param pCommandSender
 	 * @param pMessage
 	 */
 	public static void SendInfo(ICommandSender pCommandSender, String pMessage)
@@ -25,7 +45,7 @@ public class PlayerChatHelper {
 	/**
 	 * Meant for notifications that are being send to an admin/op
 	 * Color will be RED
-	 * @param pPlayer
+	 * @param pCommandSender
 	 * @param pMessage
 	 */
 	public static void SendError(ICommandSender pCommandSender, String pMessage)
@@ -36,7 +56,7 @@ public class PlayerChatHelper {
 	/**
 	 * Meant for notifications that are being send to an admin/op
 	 * Color will be YELLOW
-	 * @param pPlayer
+	 * @param pCommandSender
 	 * @param pMessage
 	 */
 	public static void SendWarn(ICommandSender pCommandSender, String pMessage)
