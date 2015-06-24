@@ -1,9 +1,10 @@
 package eu.usrv.yamcore.auxiliary;
 
 import java.util.ArrayList;
-import org.apache.logging.log4j.Logger;
-import cpw.mods.fml.common.FMLLog;
+
 import org.apache.logging.log4j.Level;
+
+import cpw.mods.fml.common.FMLLog;
 
 /**
  * Generic LogHelper to print stuff to the console

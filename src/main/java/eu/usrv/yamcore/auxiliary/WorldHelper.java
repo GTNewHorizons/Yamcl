@@ -1,9 +1,9 @@
 package eu.usrv.yamcore.auxiliary;
 
-import eu.usrv.yamcore.YAMCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import eu.usrv.yamcore.YAMCore;
 
 /**
  * Generic World-Helper

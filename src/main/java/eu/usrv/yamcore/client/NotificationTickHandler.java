@@ -1,8 +1,8 @@
 package eu.usrv.yamcore.client;
 
+import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import net.minecraft.client.Minecraft;
 
 /**
  * Original source copied from BeyondRealityCore. All credits go to pauljoda for this code

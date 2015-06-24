@@ -16,7 +16,6 @@ import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.creativetabs.CreativeTabsManager;
 import eu.usrv.yamcore.events.BucketHandler;
-import eu.usrv.yamcore.items.ModSimpleBaseItem;
 
 public class ModFluidManager {
 	public Map<String, ModSimpleBaseFluid> FluidCollection = null;

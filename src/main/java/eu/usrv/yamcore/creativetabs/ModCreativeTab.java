@@ -1,11 +1,11 @@
 package eu.usrv.yamcore.creativetabs;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import eu.usrv.yamcore.iface.IModItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import eu.usrv.yamcore.iface.IModItem;
 
 public class ModCreativeTab extends CreativeTabs {
 	private String _mTabName;

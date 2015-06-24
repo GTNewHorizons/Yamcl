@@ -1,9 +1,9 @@
 package eu.usrv.yamcore.items;
 
-import eu.usrv.yamcore.YAMCore;
-import eu.usrv.yamcore.auxiliary.LogHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import eu.usrv.yamcore.YAMCore;
+import eu.usrv.yamcore.auxiliary.LogHelper;
 
 public class ModSimpleBaseItem {
 	private final String _mName;

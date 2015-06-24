@@ -2,14 +2,11 @@ package eu.usrv.yamcore.auxiliary;
 
 import java.util.List;
 
-import eu.usrv.yamcore.YAMCore;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import eu.usrv.yamcore.YAMCore;
 
 public class EntityHelper {
 	/**

@@ -1,19 +1,9 @@
 package eu.usrv.yamcore.config;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.logging.LogManager;
 
 import net.minecraftforge.common.config.Configuration;
-
-import org.apache.commons.io.FileUtils;
-
 import eu.usrv.yamcore.YAMCore;
-import eu.usrv.yamcore.auxiliary.LogHelper;
 
 /**
  * config class to read/setup config files and folders

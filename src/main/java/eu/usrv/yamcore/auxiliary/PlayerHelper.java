@@ -1,7 +1,7 @@
 package eu.usrv.yamcore.auxiliary;
 
-import eu.usrv.yamcore.YAMCore;
 import net.minecraft.entity.player.EntityPlayer;
+import eu.usrv.yamcore.YAMCore;
 
 /**
  * Various functions for/with Players (EntityPlayer)

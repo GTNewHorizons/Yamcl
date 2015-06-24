@@ -3,14 +3,13 @@ package eu.usrv.yamcore.items;
 import java.util.HashMap;
 import java.util.Map;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import cpw.mods.fml.common.registry.GameRegistry;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.creativetabs.CreativeTabsManager;
 import eu.usrv.yamcore.iface.IExtendedModItem;
-import eu.usrv.yamcore.iface.IModItem;
 
 public class ModItemManager {
 	public Map<String, ModSimpleBaseItem> ItemCollection = null;

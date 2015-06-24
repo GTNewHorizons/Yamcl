@@ -1,12 +1,10 @@
 package eu.usrv.yamcore.blocks;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.iface.IExtendedBlockProperties;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 
 public class ModSimpleBaseBlock {
 	private final String _mName;

@@ -1,6 +1,5 @@
 package eu.usrv.yamcore.iface;
 
-import net.minecraft.creativetab.CreativeTabs;
 
 public interface IExtendedModItem<T>
 {

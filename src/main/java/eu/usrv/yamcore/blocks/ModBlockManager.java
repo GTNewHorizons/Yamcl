@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.creativetabs.CreativeTabsManager;
-import eu.usrv.yamcore.items.ModSimpleBaseItem;
 
 public class ModBlockManager {
 	public Map<String, ModSimpleBaseBlock> BlockCollection = null;
