@@ -29,6 +29,17 @@ public class ModSimpleBaseFluid extends BlockFluidClassic {
 	private String _mModID;
 	private String _mCreativeTab;
 	
+	private boolean _mRegisterBucket;
+	public void setRegisterBucket(boolean pFlag)
+	{
+		_mRegisterBucket = pFlag;
+	}
+	
+	public boolean getRegisterBucket()
+	{
+		return _mRegisterBucket;
+	}
+	
 	/** 
 	 * Set the textures used to indicate still and liquid/flowing state
 	 * @param pModID ModID String, used to locate the resources

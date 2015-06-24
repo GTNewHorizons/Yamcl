@@ -95,22 +95,23 @@ public class ModFluidManager {
 					
 					_mLog.debug(String.format("FluidBlock: %s Fluid: %s", modFluid.getUnlocalizedName(), tFluid.getUnlocalizedName()));
 
-					
-					Item fluidBucket = new ModBucketItem(modFluid);
-					fluidBucket.setUnlocalizedName(tUnlocFluidName + "_bucket").setContainerItem(Items.bucket);
-					fluidBucket.setTextureName(String.format("%s:item%s_bucket", _mModID, tUnlocFluidName));
-					fluidBucket.setCreativeTab(tTargetTab);
-					
-					FluidContainerRegistry.registerFluidContainer(tFluid, new ItemStack(fluidBucket), new ItemStack(Items.bucket));
+					if (modFluid.getRegisterBucket())
+					{
+						Item fluidBucket = new ModBucketItem(modFluid);
+						fluidBucket.setUnlocalizedName(tUnlocFluidName + "_bucket").setContainerItem(Items.bucket);
+						fluidBucket.setTextureName(String.format("%s:item%s_bucket", _mModID, tUnlocFluidName));
+						fluidBucket.setCreativeTab(tTargetTab);
+						
+						FluidContainerRegistry.registerFluidContainer(tFluid, new ItemStack(fluidBucket), new ItemStack(Items.bucket));
+						GameRegistry.registerItem(fluidBucket, _mModID + "_" + fluidBucket.getUnlocalizedName().substring(5));
+						BucketHandler.INSTANCE.buckets.put(modFluid, fluidBucket);
+					}
 					
 					Block tB = GameRegistry.registerBlock(modFluid, _mModID + "_" + modFluid.getUnlocalizedName().substring(5));
 					if (tB == null)
 						_mLog.error(String.format("Failed to register fluidblock %s", modFluid.getUnlocalizedName()));
 					
-					GameRegistry.registerItem(fluidBucket, _mModID + "_" + fluidBucket.getUnlocalizedName().substring(5));
 					tFluid.setUnlocalizedName(tUnlocFluidName);
-					
-					BucketHandler.INSTANCE.buckets.put(modFluid, fluidBucket);
 				}
 				catch (Exception e)
 				{
