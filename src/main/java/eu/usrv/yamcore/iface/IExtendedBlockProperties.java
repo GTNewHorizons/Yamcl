@@ -71,4 +71,11 @@ public interface IExtendedBlockProperties {
 	 * @return
 	 */
 	public SoundType getStepSound();
+	
+	/**
+	 * Set to false if the Block-texture has an alpha channel
+	 * See here for more information: http://greyminecraftcoder.blogspot.de/2013/07/rendering-transparent-blocks.html
+	 * @return
+	 */	
+	public boolean getIsOpaqueCube();
 }	

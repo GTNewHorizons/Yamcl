@@ -54,8 +54,11 @@ public class ModSimpleBaseBlock {
 		_mBlockInstance.setStepSound(pBlockProperties.getStepSound());
 		_mBlockInstance.setLightLevel(pBlockProperties.getLightLevel());
 		_mBlockInstance.setLightOpacity(pBlockProperties.getOpacity());
+		
+		_mBlockInstance.setInner_IsOpaque(pBlockProperties.getIsOpaqueCube());
 	}
-	
+
+
 	/**
 	 * Create a new simple block (for recipes or other very basic stuff)
 	 * @param pItemName The Blocks unlocalized name
