@@ -34,7 +34,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 	private Map<String, String> _mDataStorage;
 	private String _mBufferFileName;
 	private File _mConfigBaseDirectory;
-	private long _mLastSave;
+	//private long _mLastSave;
 	private LogHelper _mLog = YAMCore.instance.getLogger();
 	private String _mModCollection = "";
 	
@@ -48,9 +48,9 @@ public class PersistedDataBase implements IPersistedDataBase {
 		_mConfigBaseDirectory = pConfigBaseDirectory;
 		_mBufferFileName = pBufferFileName;
 		_mDataStorage = new HashMap<String, String>();
-		 _mModCollection = pModCollectionDirectory;
+		_mModCollection = pModCollectionDirectory;
 		 
-		_mLastSave = TimeHelper.GetCurrentTimestamp();
+		//_mLastSave = TimeHelper.GetCurrentTimestamp();
 	}
 	
 
@@ -61,13 +61,13 @@ public class PersistedDataBase implements IPersistedDataBase {
 		
 		_mDataStorage.put(pConfigName, pConfigValue);
 		
-		long tCurrent = TimeHelper.GetCurrentTimestamp();
-		if (tCurrent - _mLastSave > 30) // Save every 30 seconds, if changes occour
-		{
-			_mLog.info("Saving local storage file as 30 seconds have passed");
+		//long tCurrent = TimeHelper.GetCurrentTimestamp();
+		//if (tCurrent - _mLastSave > 30) // Save every 30 seconds, if changes occour
+		//{
+			//_mLog.info("Saving local storage file as 30 seconds have passed");
 			Save();
-			_mLastSave = TimeHelper.GetCurrentTimestamp();
-		}
+		//	_mLastSave = TimeHelper.GetCurrentTimestamp();
+		//}
 	}
 	
 	/* (non-Javadoc)
@@ -105,9 +105,15 @@ public class PersistedDataBase implements IPersistedDataBase {
 	}
 	
 	// TODO: Move this to some global location!
-	private String getStorageFileName()
+	private File getStorageFile()
 	{
-		return String.format("%s%s%s%s%s", _mConfigBaseDirectory, File.separator, _mModCollection, File.separator, _mBufferFileName);
+		File tDirectory = new File(_mConfigBaseDirectory, _mModCollection);
+		if (!tDirectory.exists())
+			tDirectory.mkdir();
+		
+		File tConfigFileObject = new File(tDirectory, _mBufferFileName);
+		return tConfigFileObject;
+		//return String.format("%s%s%s%s%s", _mConfigBaseDirectory, File.separator, _mModCollection, File.separator, _mBufferFileName);
 	}
 	
 	/* (non-Javadoc)
@@ -116,7 +122,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 	@Override
 	public boolean Load()
 	{
-		File tInputFile = new File(getStorageFileName());
+		File tInputFile = getStorageFile();
 		boolean tResult = LoadFile(tInputFile);
 		
 		if (tResult) // Successful load, so we have a working file
@@ -185,7 +191,7 @@ public class PersistedDataBase implements IPersistedDataBase {
 	@Override
 	public void Save()
 	{
-		File tInputFile = new File(getStorageFileName());
+		File tInputFile = getStorageFile();
 		
 		try {
 			OutputStream file = new FileOutputStream(tInputFile);
