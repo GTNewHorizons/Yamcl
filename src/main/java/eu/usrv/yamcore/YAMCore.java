@@ -6,11 +6,13 @@ import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.events.BucketHandler;
+import eu.usrv.yamcore.proxy.CommonProxy;
 
 
 /**
@@ -25,6 +27,9 @@ public class YAMCore {
 	{
 		return _mLogger;
 	}
+	
+	@SidedProxy(clientSide = "eu.usrv.yamcore.proxy.ClientProxy",  serverSide = "eu.usrv.yamcore.proxy.CommonProxy")
+	public static CommonProxy proxy;
 	
 	@Instance("YAMCore")
 	public static YAMCore instance = new YAMCore();
