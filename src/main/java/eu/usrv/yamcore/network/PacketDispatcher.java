@@ -95,6 +95,15 @@ public abstract class PacketDispatcher
     }
 
     /**
+    * Send this message to everyone connected to the server.
+    * See {@link SimpleNetworkWrapper#sendToAll(IMessage)}
+    */
+    public final void sendToAll(IMessage pMessage)
+    {
+        dispatcher.sendToAll(pMessage);
+    }
+    
+    /**
     * Send this message to the server.
     * See {@link SimpleNetworkWrapper#sendToServer(IMessage)}
     */
