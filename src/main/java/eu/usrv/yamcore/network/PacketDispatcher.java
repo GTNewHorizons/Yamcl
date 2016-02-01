@@ -35,7 +35,7 @@ public abstract class PacketDispatcher
      * @param handlerClass
      * @param messageClass
      */
-    private final <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> handlerClass, Class<REQ> messageClass) {
+    protected final <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> handlerClass, Class<REQ> messageClass) {
         Side side = AbstractClientMessageHandler.class.isAssignableFrom(handlerClass) ? Side.CLIENT : Side.SERVER;
         dispatcher.registerMessage(handlerClass, messageClass, _mPacketId++, side);
     }
@@ -47,7 +47,7 @@ public abstract class PacketDispatcher
      * @param pMessageClass
      * @param pSide
      */
-    private final void registerMessage(Class pHandlerClass, Class pMessageClass, Side pSide) {
+    protected final void registerMessage(Class pHandlerClass, Class pMessageClass, Side pSide) {
         dispatcher.registerMessage(pHandlerClass, pMessageClass, _mPacketId++, pSide);
     }
 
