@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import eu.usrv.yamcore.YAMCore;
+import eu.usrv.yamcore.auxiliary.enums.ItemEqualsCompareMethodEnum;
 
 /**
  * This class is able to convert from any Item/ItemStack/String representation
@@ -111,8 +112,8 @@ public class ItemDescriptor
         try
         {
             String[] args = pItemIdentifier.split(":");
-            ItemDescriptor tDesc = null;
-
+            //ItemDescriptor tDesc = null;
+            
             if (args.length >= 2)
             {
                 String tModID = args[0];
@@ -121,6 +122,10 @@ public class ItemDescriptor
                 if (args.length == 3) tMetaID = Integer.parseInt(args[2]);
 
                 tRet = new ItemDescriptor(tModID, tItemName, tMetaID);
+                
+                // Verify that given Item is valid
+                if (tRet.getItemStack(1) == null)
+                	tRet = null;
             }
         }
         catch (NumberFormatException e)
@@ -136,7 +141,49 @@ public class ItemDescriptor
 
         return tRet;
     }
+    
+    /**
+     * Compares two ItemDescriptor instances 
+     * 
+     * @param pID1 First Item to compare
+     * @param pID2 Second Item to compare
+     * @param pCompareMethod The Method that is used to compare
+     * @return True or false, according to the compare result
+     */
+    public static boolean isEqualTo(ItemDescriptor pID1, ItemDescriptor pID2, ItemEqualsCompareMethodEnum pCompareMethod)
+    {
+    	String tObjectHashA = "";
+    	String tObjectHashB = "";
+    	
+    	switch (pCompareMethod)
+    	{
+    	case Exact:
+    		tObjectHashA = pID1.toString();
+    		tObjectHashB = pID2.toString();
+    		
+    		break;
+    		
+    	case IgnoreMetaData:
+    		tObjectHashA = String.format("%s:%s", pID1.getModID(), pID1.getItemName());
+    		tObjectHashB = String.format("%s:%s", pID2.getModID(), pID2.getItemName());
+    		break;
+    	}
 
+    	return tObjectHashA.equals(tObjectHashB);
+    }
+
+    /**
+     * Compare *this* ItemDescriptor to a different one 
+     * 
+     * @param pOther The ItemDescriptor to compare against
+     * @param pCompareMethod The Method that is used to compare
+     * @return True or false, according to the compare result
+     */
+    public boolean isEqualTo(ItemDescriptor pOther, ItemEqualsCompareMethodEnum pCompareMethod)
+    {
+    	return ItemDescriptor.isEqualTo(this, pOther, pCompareMethod);
+    }
+    
     /**
      * Creates an Item-representation of the current ItemDescriptor
      * 
