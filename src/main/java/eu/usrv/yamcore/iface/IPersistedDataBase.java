@@ -1,18 +1,20 @@
+
 package eu.usrv.yamcore.iface;
 
-public interface IPersistedDataBase {
 
-	public abstract void setValue(String pConfigName, String pConfigValue);
+public interface IPersistedDataBase
+{
 
-	public abstract void setValue(String pConfigName, int pConfigValue);
+  public abstract void setValue( String pConfigName, String pConfigValue );
 
-	public abstract int getValueAsInt(String pConfigName,
-			int pDefaultValueOnNull);
+  public abstract void setValue( String pConfigName, int pConfigValue );
 
-	public abstract String getValue(String pConfigName);
+  public abstract int getValueAsInt( String pConfigName, int pDefaultValueOnNull );
 
-	public abstract boolean Load();
+  public abstract String getValue( String pConfigName );
 
-	public abstract void Save();
+  public abstract boolean Load();
+
+  public abstract void Save();
 
 }

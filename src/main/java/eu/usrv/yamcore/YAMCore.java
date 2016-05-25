@@ -1,4 +1,6 @@
+
 package eu.usrv.yamcore;
+
 
 import java.io.File;
 
@@ -17,49 +19,50 @@ import eu.usrv.yamcore.proxy.CommonProxy;
 
 /**
  * @author Namikon
- *
+ * 
  */
-@Mod(modid = "YAMCore", name = "YAMCore", version = "GRADLETOKEN_VERSION")
-public class YAMCore {
-	private LogHelper _mLogger = new LogHelper("Yamcl");
-	
-	public LogHelper getLogger()
-	{
-		return _mLogger;
-	}
-	
-	@SidedProxy(clientSide = "eu.usrv.yamcore.proxy.ClientProxy",  serverSide = "eu.usrv.yamcore.proxy.CommonProxy")
-	public static CommonProxy proxy;
-	
-	@Instance("YAMCore")
-	public static YAMCore instance = new YAMCore();
-	
-	private boolean DebugTagFileFound(FMLPreInitializationEvent event)
-	{
-		File tFile = new File(event.getModConfigurationDirectory() + "/YAMCoreDebug");
-		return tFile.exists();
-	}
-	
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		if(DebugTagFileFound(event))
-		{
-			_mLogger.info("YAMCore debug information ENABLED");
-			_mLogger.setDebugOutput(true);
-		}
-		
-		MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
-	}
-	
-	@EventHandler
-	public void Init(FMLInitializationEvent event)
-	{
-	}
-	
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
-	
-	}
+@Mod( modid = "YAMCore", name = "YAMCore", version = "GRADLETOKEN_VERSION" )
+public class YAMCore
+{
+  private LogHelper _mLogger = new LogHelper( "Yamcl" );
+
+  public LogHelper getLogger()
+  {
+    return _mLogger;
+  }
+
+  @SidedProxy( clientSide = "eu.usrv.yamcore.proxy.ClientProxy", serverSide = "eu.usrv.yamcore.proxy.CommonProxy" )
+  public static CommonProxy proxy;
+
+  @Instance( "YAMCore" )
+  public static YAMCore     instance = new YAMCore();
+
+  private boolean DebugTagFileFound( FMLPreInitializationEvent event )
+  {
+    File tFile = new File( event.getModConfigurationDirectory() + "/YAMCoreDebug" );
+    return tFile.exists();
+  }
+
+  @EventHandler
+  public void preInit( FMLPreInitializationEvent event )
+  {
+    if( DebugTagFileFound( event ) )
+    {
+      _mLogger.info( "YAMCore debug information ENABLED" );
+      _mLogger.setDebugOutput( true );
+    }
+
+    MinecraftForge.EVENT_BUS.register( BucketHandler.INSTANCE );
+  }
+
+  @EventHandler
+  public void Init( FMLInitializationEvent event )
+  {
+  }
+
+  @EventHandler
+  public void postInit( FMLPostInitializationEvent event )
+  {
+
+  }
 }
