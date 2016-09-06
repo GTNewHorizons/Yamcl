@@ -6,3 +6,4 @@ eclipse/
 Build.lnk
 bin/
 gradlew.bat - Verknüpfung.lnk
+gradle.properties

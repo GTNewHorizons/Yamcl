@@ -15,39 +15,27 @@ buildscript {
     }
 }
 
+apply plugin: 'groovy'
 apply plugin: 'forge'
+apply plugin: 'maven'
 
 version = "1.7.10-0.5.65"
-group= "eu.usrv.YAMCore" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "eu.usrv" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "YAMCore"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
     runDir = "eclipse"
 	
-	replaceIn "src/main/java/eu/usrv/yamcore/YAMCore.java"
-	replace "GRADLETOKEN_VERSION", project.version.split('-')[1]
+    replaceIn "src/main/java/eu/usrv/yamcore/YAMCore.java"
+    replace "GRADLETOKEN_VERSION", project.version.split('-')[1]
 }
 
-dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-}
+dependencies {}
 
 processResources
 {
-	def cleanVersion = project.version.split('-')[1]
+    def cleanVersion = project.version.split('-')[1]
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", cleanVersion
     inputs.property "mcversion", project.minecraft.version
@@ -64,6 +52,11 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from 'build/docs/groovydoc'
 }
 
 // Create deobf dev jars
@@ -89,6 +82,33 @@ task sourceJar(type: Jar, dependsOn:classes) {
 artifacts {
     archives deobfJar
     archives libJar
+    archives groovydocJar
     archives sourceJar
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusRepositoryUrl) {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+
+            pom.project {
+                name 'YAMCore'
+                packaging 'jar'
+                description 'YetAnotherModdingCoreLib'
+                url 'http://jenkins.usrv.de/'
+
+                licenses {
+                    license {
+                        name 'General Public License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+            }
+        }
+    }
+}
+
 
