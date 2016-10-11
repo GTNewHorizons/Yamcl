@@ -1,7 +1,7 @@
 # Yamcl
 Yet another modding CoreLib
 
-Master Branch: [![Build Status](http://jenkins.usrv.eu:8081/buildStatus/icon?job=YAMCore)](http://jenkins.usrv.eu:8081/job/YAMCore/)
+Master Branch: [![Build Status](http://jenkins.usrv.de:8081/buildStatus/icon?job=YAMCL)](http://jenkins.usrv.de:8081/job/YAMCL/)
 
 
 # Copyright / License / Modpack usage
