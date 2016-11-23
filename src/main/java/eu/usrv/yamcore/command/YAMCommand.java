@@ -118,12 +118,13 @@ public class YAMCommand implements ICommand, ICommandSender
     {
       try
       {
-        PlayerChatHelper.SendJsonFormatted( (EntityPlayer) pCmdSender, "Json1: [%s], Json2: [%s], Json3: [%s], Json4: [%s]", jct, jct2, jct3, jct4 );
+        PlayerChatHelper.SendJsonFormatted( (EntityPlayer) pCmdSender, "Json1: [{0}], Json2: [{1}], Json3: [{2}], Json4: [{3}]", jct, jct2, jct3, jct4 );
       }
       catch( Exception e )
       {
         e.printStackTrace();
       }
+      return;
     }
     else if( tFunc == 9 )
     {

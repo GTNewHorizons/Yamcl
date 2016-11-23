@@ -356,14 +356,10 @@ public class PlayerChatHelper
   {
     char[] tMessageArray = pMessage.toCharArray();
     ArrayList<JSONChatText> tMessageParts = new ArrayList<JSONChatText>();
-    int tokenLastEnd = 0;
+    int tokenLastEnd = -1;
     int tokenStart = -1;
     int tokenEnd = -1;
 
-    // Start: 13
-    // End : 15
-    // i : 15
-    // {samplestring {0} blablablehstri aiaa nakna {2} djaj {3}
     for( int i = 0; i < tMessageArray.length; i++ )
     {
       if( tMessageArray[i] == '{' ) // Token found
@@ -376,13 +372,19 @@ public class PlayerChatHelper
             if( tokenStart > -1 )
               throw new Exception( String.format( "Unescaped token-start symbol found at position %d", i ) ); // Crash
             else
+            {
               tokenStart = i; // we don't have a start-token yet. Store it
+              //YAMCore.instance.getLogger().info( String.format( "Found opening token at %d", i ) );
+            }
           }
           // Else: Skip this token. it is escaped and part of the original message
         }
         else
+        {
           // We can't check. It's the first char, so it is definitely a token to be checked
           tokenStart = i;
+          //YAMCore.instance.getLogger().info( String.format( "Found opening token at %d", i ) );
+        }
       }
 
       if( tMessageArray[i] == '}' )
@@ -393,7 +395,10 @@ public class PlayerChatHelper
           {
             // Token not escaped. Let's see if we already have a start-token that this close one relates to
             if( tokenStart > -1 )
+            {
               tokenEnd = i; // we do have a start-token
+              //YAMCore.instance.getLogger().info( String.format( "Found end token at %d", i ) );
+            }
             else
               // We don't have one
               throw new Exception( String.format( "Unescaped token-start symbol found at position %d", i ) ); // Crash
@@ -408,13 +413,14 @@ public class PlayerChatHelper
       // Both start&end is set. Analyse it
       if( tokenStart > -1 && tokenEnd > -1 )
       {
+        //YAMCore.instance.getLogger().info( String.format( "Start: %d End: %d", tokenStart, tokenEnd ) );
         // Create an empty json body with the text and add it to the collection
-        tMessageParts.add( extractSubStringToJSON(pMessage, tokenLastEnd, tokenStart) );
+        tMessageParts.add( extractSubStringToJSON( pMessage, tokenLastEnd + 1, tokenStart - 1 ) );
 
         // Extract the Arg-Nr. that is supposed to fill the gap
-        String tArgNr = pMessage.substring( tokenStart + 1, tokenEnd - tokenStart - 1 );
+        String tArgNr = pMessage.substring( tokenStart + 1, tokenEnd );
         if( !IntHelper.tryParse( tArgNr ) )
-          throw new IllegalArgumentException( String.format( "Token-Element at pos %d is not an integer", tokenStart + 1 ) );
+          throw new IllegalArgumentException( String.format( "Token-Element at pos %d is not an integer (%s)", tokenStart + 1, tArgNr ) );
 
         int tArg = Integer.parseInt( tArgNr );
 
@@ -430,10 +436,10 @@ public class PlayerChatHelper
         tokenEnd = -1;
       }
     }
-    
+
     // If there is more text after the last close-tag, copy that now
-    if (tokenLastEnd < tMessageArray.length)
-      tMessageParts.add( extractSubStringToJSON(pMessage, tokenLastEnd, tMessageArray.length - tokenLastEnd) );
+    if( tokenLastEnd < tMessageArray.length )
+      tMessageParts.add( extractSubStringToJSON( pMessage, tokenLastEnd, tMessageArray.length - 1 ) );
 
     // Send assembled message
     JSONChatText[] tJsonMessages = new JSONChatText[tMessageParts.size()];
@@ -441,19 +447,29 @@ public class PlayerChatHelper
     SendJsonRaw( pPlayer, tJsonMessages );
   }
 
-  private static JSONChatText extractSubStringToJSON( String pMessage, int pStart, int pLen )
+  private static JSONChatText extractSubStringToJSON( String pMessage, int pStart, int pEnd )
   {
     // Exctact the text between the last known end-token and the new start one
-    String tMessagePart = pMessage.substring( pStart, pLen );
+    String tMessagePart = pMessage.substring( pStart, pEnd );
 
     // Get rid of the escape-chars
     tMessagePart = tMessagePart.replace( "\\{", "{" );
     tMessagePart = tMessagePart.replace( "\\}", "}" );
 
     // Create an empty json body with the text and add it to the collection
+    // YAMCore.instance.getLogger().info( String.format("Extracted [%s] from message. Start: %d End: %d", tMessagePart,
+    // pStart, pEnd) );
     return JSONChatText.simpleMessage( tMessagePart );
   }
 
+  /**
+   * Send variable number of JSON Objects to a player.
+   * Note: It is recommended to use SendJsonFormatted() if you want to format a text
+   * This function will just glue all elements together!
+   * 
+   * @param pPlayer
+   * @param pChatObjects
+   */
   public static void SendJsonRaw( EntityPlayer pPlayer, JSONChatText... pChatObjects )
   {
     MinecraftServer tMCServer = MinecraftServer.getServer();
