@@ -20,9 +20,9 @@ import eu.usrv.yamcore.auxiliary.enums.ItemEqualsCompareMethodEnum;
 public class ItemDescriptor
 {
   private static LogHelper _mLog = YAMCore.instance.getLogger();
-  private final String     mModID;
-  private final String     mItemName;
-  private final int        mMetaID;
+  private final String mModID;
+  private final String mItemName;
+  private final int mMetaID;
 
   public String getModID()
   {
@@ -254,24 +254,46 @@ public class ItemDescriptor
    * @return An itemstack with attached NBTTag, or null if the tag was invalid, or the itemdescriptor
    * couldn't be turned into a valid itemstack
    */
-  public ItemStack getItemStackwNBT( int pAmount, String pTag )
+  public ItemStack getItemStackwNBT( int pAmount, NBTTagCompound pTag )
   {
     ItemStack tRet = null;
+    tRet = getItemStack( pAmount );
+    if( pTag != null )
+      tRet.setTagCompound( pTag );
+
+    return tRet;
+  }
+
+  /**
+   * Get an ItemStack instance with given amount of items and NBT Tag pTag is
+   * optional, and this function will return an ItemStack without NBT if pTag
+   * is empty
+   * 
+   * @param pAmount
+   * @param pTag
+   * @return An itemstack with attached NBTTag, or null if the tag was invalid, or the itemdescriptor
+   * couldn't be turned into a valid itemstack
+   */
+  public ItemStack getItemStackwNBT( int pAmount, String pTag )
+  {
+    NBTTagCompound tNBT = null;
+    boolean tDamagedNBT = false;
+
     try
     {
-      tRet = getItemStack( pAmount );
-      if( tRet != null && !pTag.isEmpty() )
-      {
-        NBTTagCompound tNBT = (NBTTagCompound) JsonToNBT.func_150315_a( pTag );
-        tRet.setTagCompound( tNBT );
-      }
+      if( !pTag.isEmpty() )
+        tNBT = (NBTTagCompound) JsonToNBT.func_150315_a( pTag );
     }
     catch( Exception e )
     {
       _mLog.error( String.format( "Found invalid NBT Tag: %s", pTag ) );
-      tRet = null;
+      tDamagedNBT = true;
     }
-    return tRet;
+
+    if( !tDamagedNBT )
+      return getItemStackwNBT( pAmount, tNBT );
+    else
+      return null;
   }
 
   /**
