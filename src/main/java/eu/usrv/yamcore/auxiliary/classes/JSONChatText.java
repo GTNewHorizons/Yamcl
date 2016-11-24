@@ -4,10 +4,14 @@ package eu.usrv.yamcore.auxiliary.classes;
 
 import java.util.ArrayList;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 
 
 /**
@@ -24,10 +28,101 @@ public class JSONChatText
   public JSONHoverEvent HoverEvent;
   public JSONClickEvent ClickEvent;
 
+  /**
+   * Create a JSON Formatted message
+   * 
+   * @param pMessage
+   * @return
+   */
   public static JSONChatText simpleMessage( String pMessage )
   {
     JSONChatText tJ = new JSONChatText();
     tJ.Message = pMessage;
+    return tJ;
+  }
+
+  /**
+   * Create a JSON Formatted message with a simple text-tooltip
+   * 
+   * @param pMessage
+   * @param pToolTip
+   * @return
+   */
+  public static JSONChatText simpleMessageWToolTip( String pMessage, String pToolTip )
+  {
+    JSONChatText tJ = new JSONChatText();
+    tJ.Message = pMessage;
+    tJ.HoverEvent = JSONHoverEvent.SimpleText( pToolTip );
+    return tJ;
+  }
+
+  /**
+   * Create a JSON Formatted message with a simple item-tooltip
+   * 
+   * @param pMessage
+   * @param pItem
+   * @return
+   */
+  public static JSONChatText simpleMessageWToolTip( String pMessage, ItemDescriptor pItem )
+  {
+    JSONChatText tJ = new JSONChatText();
+    tJ.Message = pMessage;
+    tJ.HoverEvent = JSONHoverEvent.Item( pItem );
+    return tJ;
+  }
+
+  /**
+   * Create a JSON Formatted message with a simple item-tooltip
+   * 
+   * @param pMessage
+   * @param pItem
+   * @return
+   */
+  public static JSONChatText simpleMessageWToolTip( String pMessage, ItemStack pItem )
+  {
+    return simpleMessageWToolTip( pMessage, ItemDescriptor.fromStack( pItem ) );
+  }
+
+  /**
+   * Create a JSON Formatted message with a simple item-tooltip
+   * 
+   * @param pMessage
+   * @param pItem
+   * @return
+   */
+  public static JSONChatText simpleMessageWToolTip( String pMessage, Item pItem )
+  {
+    return simpleMessageWToolTip( pMessage, ItemDescriptor.fromItem( pItem ) );
+  }
+
+  /**
+   * Create JSON Formatted message that will run a command on click
+   * 
+   * @param pMessage
+   * @param pCommand
+   * @return
+   */
+  public static JSONChatText simpleMessageWCommand( String pMessage, String pCommand )
+  {
+    return simpleMessageWCommand( pMessage, pCommand, false );
+  }
+
+  /**
+   * Create JSON Formatted message that will run or suggest a command on click
+   * 
+   * @param pMessage
+   * @param pCommand
+   * @param pSuggestOnly if true, the command will not be executed directly
+   * @return
+   */
+  public static JSONChatText simpleMessageWCommand( String pMessage, String pCommand, boolean pSuggestOnly )
+  {
+    JSONChatText tJ = new JSONChatText();
+    tJ.Message = pMessage;
+    if( pSuggestOnly )
+      tJ.ClickEvent = JSONClickEvent.suggestCommand( pCommand );
+    else
+      tJ.ClickEvent = JSONClickEvent.runCommand( pCommand );
     return tJ;
   }
 
