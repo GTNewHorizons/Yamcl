@@ -356,7 +356,7 @@ public class PlayerChatHelper
   {
     char[] tMessageArray = pMessage.toCharArray();
     ArrayList<JSONChatText> tMessageParts = new ArrayList<JSONChatText>();
-    int tokenLastEnd = -1;
+    int tokenLastEnd = 0;
     int tokenStart = -1;
     int tokenEnd = -1;
 
@@ -415,7 +415,7 @@ public class PlayerChatHelper
       {
         //YAMCore.instance.getLogger().info( String.format( "Start: %d End: %d", tokenStart, tokenEnd ) );
         // Create an empty json body with the text and add it to the collection
-        tMessageParts.add( extractSubStringToJSON( pMessage, tokenLastEnd + 1, tokenStart - 1 ) );
+        tMessageParts.add( extractSubStringToJSON( pMessage, tokenLastEnd, tokenStart ) );
 
         // Extract the Arg-Nr. that is supposed to fill the gap
         String tArgNr = pMessage.substring( tokenStart + 1, tokenEnd );
@@ -458,7 +458,6 @@ public class PlayerChatHelper
 
     // Create an empty json body with the text and add it to the collection
     // YAMCore.instance.getLogger().info( String.format("Extracted [%s] from message. Start: %d End: %d", tMessagePart,
-    // pStart, pEnd) );
     return JSONChatText.simpleMessage( tMessagePart );
   }
 

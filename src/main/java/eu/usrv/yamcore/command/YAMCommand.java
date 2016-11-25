@@ -2,6 +2,7 @@
 package eu.usrv.yamcore.command;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import eu.usrv.yamcore.YAMCore;
+import eu.usrv.yamcore.auxiliary.DonorController;
 import eu.usrv.yamcore.auxiliary.IntHelper;
 import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 import eu.usrv.yamcore.auxiliary.PlayerChatHelper;
@@ -118,7 +120,9 @@ public class YAMCommand implements ICommand, ICommandSender
     {
       try
       {
-        PlayerChatHelper.SendJsonFormatted( (EntityPlayer) pCmdSender, "Json1: [{0}], Json2: [{1}], Json3: [{2}], Json4: [{3}]", jct, jct2, jct3, jct4 );
+        // PlayerChatHelper.SendJsonFormatted( (EntityPlayer) pCmdSender,
+        // "Json1: [{0}], Json2: [{1}], Json3: [{2}], Json4: [{3}]", jct, jct2, jct3, jct4 );
+        PlayerChatHelper.SendJsonFormatted( (EntityPlayer) pCmdSender, "Json1: {0} {1}", jct, jct2 );
       }
       catch( Exception e )
       {
@@ -128,6 +132,22 @@ public class YAMCommand implements ICommand, ICommandSender
     }
     else if( tFunc == 9 )
     {
+      try
+      {
+        EntityPlayer tEp = (EntityPlayer) pCmdSender;
+        PlayerChatHelper.SendPlain( pCmdSender, "Your UUID is: %s", ( tEp.getUniqueID() ) );
+        DonorController dc = new DonorController( new URL( "http://pastebin.com/raw/Zx4nNcuZ" ) );
+
+        PlayerChatHelper.SendPlain( pCmdSender, "isDonor?   %s", dc.isDonor( tEp ) ? "Yes" : "No" );
+        PlayerChatHelper.SendPlain( pCmdSender, "DonorLevel %d", dc.getLevel( tEp ) );
+        PlayerChatHelper.SendPlain( pCmdSender, "Arg found? %s", dc.hasExtraArg( tEp, "TESTFLAG" ) );
+
+        dc = null;
+      }
+      catch( Exception e )
+      {
+        PlayerChatHelper.SendError( pCmdSender, "Random error" );
+      }
     }
     else if( tFunc == 10 )
     {
