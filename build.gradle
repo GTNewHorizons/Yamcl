@@ -19,29 +19,53 @@ apply plugin: 'groovy'
 apply plugin: 'forge'
 apply plugin: 'maven'
 
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
 allprojects {
     apply plugin: 'java'
+	compileJava.options.encoding = 'UTF-8'
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 }
 
-version = "1.7.10-0.5.70"
+version = "${config.minecraft.version}-${config.yamcore.version}"
 group= "eu.usrv" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "YAMCore"
 
 minecraft {
-    version = "10.13.4.1558-1.7.10"
+    version = "${config.forge.version}"
     runDir = "eclipse"
 	
     replaceIn "src/main/java/eu/usrv/yamcore/YAMCore.java"
-    replace "GRADLETOKEN_VERSION", project.version.split('-')[1]
+	def versionArray = project.version.tokenize('-')
+	if (versionArray.size() == 3)
+	{
+		replace "GRADLETOKEN_VERSION", versionArray[1] + "-" + versionArray[2]
+	}
+	else
+	{
+		replace "GRADLETOKEN_VERSION", versionArray[1]
+	}
+    
 }
 
-dependencies {}
+dependencies {
+    compile "mysql:mysql-connector-java:6.0.5"
+}
 
 processResources
 {
-    def cleanVersion = project.version.split('-')[1]
+    def cleanVersion = ""
+	def versionArray = project.version.tokenize('-')
+	if (versionArray.size() == 3)
+	{ cleanVersion = versionArray[1] + "-" + versionArray[2] }
+	else 
+	{ cleanVersion = versionArray[1] }
+		
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", cleanVersion
     inputs.property "mcversion", project.minecraft.version
@@ -95,6 +119,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
+			
             repository(url: nexusRepositoryUrl) {
                 authentication(userName: nexusUsername, password: nexusPassword)
             }
