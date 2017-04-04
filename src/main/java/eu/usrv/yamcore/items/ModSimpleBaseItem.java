@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
+import eu.usrv.yamcore.iface.IExtendedItemProperties;
 
 
 public class ModSimpleBaseItem
@@ -37,6 +38,18 @@ public class ModSimpleBaseItem
     // pCustomTextureName));
   }
 
+  public ModSimpleBaseItem( IExtendedItemProperties pItemProperties, String pCreativeTabName )
+  {
+    _mName = pItemProperties.getItemName();
+    _mCreativeTab = pCreativeTabName;
+    _mTextureOverride = pItemProperties.getCustomTextureName();
+
+    _mItemInstance = new Item();
+    _mItemInstance.setUnlocalizedName( pItemProperties.getUnlocalizedName() );
+    if (pItemProperties.getDontConsumeInRecipes())
+      _mItemInstance.setContainerItem( _mItemInstance );
+  }
+  
   /**
    * Create a new simple item (for recipes or other very basic stuff). The texturename will be [modid]:item[pItemName]
    * 
