@@ -4,17 +4,13 @@ package eu.usrv.yamcore.auxiliary;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import org.apache.commons.io.IOUtils;
 
-import scala.actors.threadpool.Arrays;
 import eu.usrv.yamcore.YAMCore;
 
 
@@ -94,13 +90,13 @@ public final class DonorController
 
   public boolean isDonor( UUID pPlayerUUID )
   {
-    return( getDonor( pPlayerUUID ) != null ? true : false );
+    return( getDonor( pPlayerUUID ) != null );
   }
 
   public boolean hasExtraArg( UUID pPlayerUUID, String pDonorArg )
   {
     Donor d = getDonor( pPlayerUUID );
-    return( d != null ? d._mDonorExtraArgs.contains( pDonorArg ) : false );
+    return( d != null && d._mDonorExtraArgs.contains( pDonorArg ) );
   }
 
   public int getLevel( UUID pPlayerUUID )
@@ -173,7 +169,7 @@ public final class DonorController
       try
       {
         if( lineArgs.length > 2 )
-          tArgs = new ArrayList<String>( Arrays.asList( lineArgs[2].split( "$" ) ) );
+          tArgs = new ArrayList<String>( Arrays.asList( lineArgs[2].split( "!" ) ) );
         else
           tArgs = new ArrayList<String>();
       }

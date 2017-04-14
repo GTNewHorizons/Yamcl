@@ -31,7 +31,7 @@ public class YAMCore
 
   public static boolean isDebug()
   {
-    return ( tVersion.length() == 19 ) || tDebugFilePresent;
+    return ( tVersion.length() == 20 ) || tDebugFilePresent;
   }
 
   private LogHelper _mLogger = new LogHelper( "Yamcl" );
