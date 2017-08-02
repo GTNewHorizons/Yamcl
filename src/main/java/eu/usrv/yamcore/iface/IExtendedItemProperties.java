@@ -1,6 +1,7 @@
 
 package eu.usrv.yamcore.iface;
 
+import net.minecraft.item.Item;
 
 public interface IExtendedItemProperties
 {
@@ -13,5 +14,6 @@ public interface IExtendedItemProperties
    * @return
    */
   boolean getDontConsumeInRecipes();
+  Item getCustomItem();
 
 }

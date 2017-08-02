@@ -44,7 +44,7 @@ public class ModSimpleBaseItem
     _mCreativeTab = pCreativeTabName;
     _mTextureOverride = pItemProperties.getCustomTextureName();
 
-    _mItemInstance = new Item();
+    _mItemInstance = pItemProperties.getCustomItem();
     _mItemInstance.setUnlocalizedName( pItemProperties.getUnlocalizedName() );
     if (pItemProperties.getDontConsumeInRecipes())
       _mItemInstance.setContainerItem( _mItemInstance );
