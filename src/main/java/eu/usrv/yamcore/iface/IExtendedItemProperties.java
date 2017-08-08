@@ -1,6 +1,7 @@
 
 package eu.usrv.yamcore.iface;
 
+import eu.usrv.yamcore.auxiliary.enums.ItemRecipeBehaviorEnum;
 
 public interface IExtendedItemProperties
 {
@@ -9,9 +10,8 @@ public interface IExtendedItemProperties
   String getUnlocalizedName();
 
   /**
-   * Return true if this item shall never be consumed in recipes
+   * Define the items behavior on a crafting process.
    * @return
    */
-  boolean getDontConsumeInRecipes();
-
+  ItemRecipeBehaviorEnum getItemRecipeBehavior();
 }

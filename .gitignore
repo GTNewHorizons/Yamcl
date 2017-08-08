@@ -8,3 +8,4 @@ bin/
 gradlew.bat - Verknüpfung.lnk
 gradle.properties
 .idea/
+classes/
