@@ -120,8 +120,8 @@ uploadArchives {
     repositories {
         mavenDeployer {
 			
-            repository(url: nexusRepositoryUrl) {
-                authentication(userName: nexusUsername, password: nexusPassword)
+            repository(url: findProperty('nexusRepositoryUrl') ?: '') {
+                authentication(userName: findProperty('nexusUsername') ?: '', password: findProperty('nexusPassword') ?: '')
             }
 
             pom.project {
