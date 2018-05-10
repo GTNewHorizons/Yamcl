@@ -28,8 +28,8 @@ file "build.properties" withReader {
 allprojects {
     apply plugin: 'java'
 	compileJava.options.encoding = 'UTF-8'
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
 version = "${config.minecraft.version}-${config.yamcore.version}"
