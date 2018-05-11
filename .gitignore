@@ -9,3 +9,9 @@ gradlew.bat - Verknüpfung.lnk
 gradle.properties
 .idea/
 classes/
+YAMCL_main.iml
+YAMCL.iws
+YAMCL_test.iml
+YAMCL.iml
+YAMCL.ipr
+YAMCL_api.iml
