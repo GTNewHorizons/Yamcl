@@ -7,7 +7,7 @@ public class BackgroundSkin
 {
   
   public static final BackgroundSkin defualt =
-          new BackgroundSkin(new ResourceLocation("GraviSuite:textures/gui/gui.png"));
+          new BackgroundSkin(new ResourceLocation("yamcore:textures/dynamicgui/gui_base.png"));
   public final ResourceLocation texture;
   
   public BackgroundSkin(ResourceLocation compoundTexture)

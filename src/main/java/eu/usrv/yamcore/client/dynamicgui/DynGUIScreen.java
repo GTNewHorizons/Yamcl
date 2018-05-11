@@ -123,14 +123,13 @@ public abstract class DynGUIScreen extends GuiScreen
   protected void drawGuiBackgroundLayer(int mouseX, int mouseY)
   {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    //GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     GL11.glPushMatrix();
     GL11.glTranslated(guiLeft, guiTop,0);
-    //GlStateManager.translate(guiLeft, guiTop, 0);
+
     background.drawBackground(mc, mouseX, mouseY);
     background.drawForeground(mc, mouseX, mouseY);
     GL11.glTranslated(-guiLeft, -guiTop, 0);
-    //GlStateManager.translate(-guiLeft, -guiTop, 0);
+
     GL11.glPopMatrix();
     elements.forEach(o -> o.drawBackground(mc, mouseX, mouseY));
   }
