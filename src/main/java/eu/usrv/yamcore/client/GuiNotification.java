@@ -2,21 +2,19 @@
 package eu.usrv.yamcore.client;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,18 +26,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly( Side.CLIENT )
 public class GuiNotification extends Gui
 {
-  private static final ResourceLocation backGround    = new ResourceLocation( "textures/gui/achievement/achievement_background.png" );
-  private Minecraft                     minecraft;
-  private int                           width;
+  private static final ResourceLocation backGround = new ResourceLocation( "textures/gui/achievement/achievement_background.png" );
+  private final Minecraft minecraft;
+  private int width;
   private int                           height;
   private String                        title;
   private String                        description;
   private Notification                  notification;
-  private long                          timeOpen;
-  private RenderItem                    itemRenderer;
-  private boolean                       hide;
+  private long timeOpen;
+  private final RenderItem itemRenderer;
+  private boolean hide;
 
-  private List<Notification>            notifications = new ArrayList<Notification>();
+  private final List<Notification> notifications = new ArrayList<Notification>();
 
   public GuiNotification( Minecraft mc )
   {
@@ -47,16 +45,32 @@ public class GuiNotification extends Gui
     this.itemRenderer = new RenderItem();
   }
 
-  public void queueNotification( Notification notification1 )
+  public void queueNotification( Notification notification )
   {
+    queueNotification( notification, true );
+  }
+
+  public void queueNotification( Notification notification, boolean checkAlreadyQueued )
+  {
+    if( checkAlreadyQueued )
+    {
+      for( Notification noti : notifications )
+      {
+        if( noti.equals( notification ) )
+        {
+          return;
+        }
+      }
+    }
+
     if( notifications.isEmpty() )
     {
-      this.title = notification1.getTitle();
-      this.description = notification1.getDescription();
+      this.title = notification.getTitle();
+      this.description = notification.getDescription();
       this.timeOpen = Minecraft.getSystemTime();
-      this.notification = notification1;
+      this.notification = notification;
     }
-    notifications.add( notification1 );
+    notifications.add( notification );
   }
 
   public void moveToNextNotification()
@@ -91,7 +105,7 @@ public class GuiNotification extends Gui
     GL11.glClear( GL11.GL_DEPTH_BUFFER_BIT );
     GL11.glMatrixMode( GL11.GL_PROJECTION );
     GL11.glLoadIdentity();
-    GL11.glOrtho( 0.0D, (double) this.width, (double) this.height, 0.0D, 1000.0D, 3000.0D );
+    GL11.glOrtho( 0.0D, this.width, this.height, 0.0D, 1000.0D, 3000.0D );
     GL11.glMatrixMode( GL11.GL_MODELVIEW );
     GL11.glLoadIdentity();
     GL11.glTranslatef( 0.0F, 0.0F, -2000.0F );

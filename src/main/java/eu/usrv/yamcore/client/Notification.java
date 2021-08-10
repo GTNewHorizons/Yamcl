@@ -4,24 +4,25 @@ package eu.usrv.yamcore.client;
 
 import net.minecraft.item.ItemStack;
 
+import java.util.Objects;
+
 
 /**
  * Original source copied from BeyondRealityCore. All credits go to pauljoda for this code
- * 
+ *
  * @author pauljoda
- * 
  */
 public class Notification
 {
-  private ItemStack icon;
-  private String    title;
-  private String    description;
+  private final ItemStack icon;
+  private final String title;
+  private final String description;
 
-  public Notification( ItemStack stack, String t, String d )
+  public Notification( ItemStack stack, String title, String desc )
   {
     icon = stack;
-    title = t;
-    description = d;
+    this.title = title;
+    description = desc;
   }
 
   public ItemStack getIcon()
@@ -37,5 +38,20 @@ public class Notification
   public String getDescription()
   {
     return description;
+  }
+
+  @Override public boolean equals( Object o )
+  {
+    if( this == o )
+      return true;
+    if( !( o instanceof Notification ) )
+      return false;
+    Notification that = (Notification) o;
+    return title.equals( that.title ) && description.equals( that.description );
+  }
+
+  @Override public int hashCode()
+  {
+    return Objects.hash( title, description );
   }
 }
