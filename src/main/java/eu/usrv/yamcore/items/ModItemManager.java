@@ -2,23 +2,23 @@
 package eu.usrv.yamcore.items;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import eu.usrv.yamcore.YAMCore;
 import eu.usrv.yamcore.auxiliary.LogHelper;
 import eu.usrv.yamcore.creativetabs.CreativeTabsManager;
 import eu.usrv.yamcore.iface.IExtendedModItem;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ModItemManager
 {
   public Map<String, ModSimpleBaseItem> ItemCollection = null;
-  private LogHelper                     _mLog          = YAMCore.instance.getLogger();
-  private String                        _mModID;
+  private final LogHelper _mLog = YAMCore.instance.getLogger();
+  private final String _mModID;
 
   public ModItemManager( String pModID )
   {
@@ -28,7 +28,7 @@ public class ModItemManager
 
   /**
    * Reveive instance of given ModItem
-   * 
+   *
    * @param pModItem
    * @return
    */
@@ -58,7 +58,7 @@ public class ModItemManager
 
   /**
    * Register Items in the forge registry
-   * 
+   *
    * @return
    */
   public boolean RegisterItems( CreativeTabsManager pTabManager )
@@ -106,24 +106,24 @@ public class ModItemManager
 
   /**
    * Register a "non-enum" item to the gameregistry
-   * 
+   *
    * @param <T>
    * @return
    */
-  public <T> boolean RegisterNonEnumItem( CreativeTabsManager pTabManager, IExtendedModItem<T> pModItem )
+  public <T extends Item> boolean RegisterNonEnumItem( CreativeTabsManager pTabManager, IExtendedModItem<T> pModItem )
   { // Failed to define with "Class <? extends Item>", which would be a LOT easier to understand (and to code!)
     try
     {
       CreativeTabs tTargetTab = pTabManager.GetCreativeTabInstance( pModItem.getCreativeTabName() );
       if( tTargetTab == null )
       {
-        _mLog.warn( String.format( "CreativeTab name %s requested, but not registered in TabManager. Adding item %s to Tab 'Misc'", pModItem.getCreativeTabName(), ( (Item) ( pModItem.getConstructedItem() ) ).getUnlocalizedName() ) );
+        _mLog.warn( String.format( "CreativeTab name %s requested, but not registered in TabManager. Adding item %s to Tab 'Misc'", pModItem.getCreativeTabName(), pModItem.getConstructedItem().getUnlocalizedName() ) );
         tTargetTab = CreativeTabs.tabMisc;
       }
 
-      ( (Item) pModItem ).setCreativeTab( tTargetTab );
+      pModItem.getConstructedItem().setCreativeTab( tTargetTab );
 
-      GameRegistry.registerItem( (Item) pModItem.getConstructedItem(), pModItem.getUnlocalizedNameForRegistration() );
+      GameRegistry.registerItem( pModItem.getConstructedItem(), pModItem.getUnlocalizedNameForRegistration() );
       return true;
     }
     catch( Exception e )
