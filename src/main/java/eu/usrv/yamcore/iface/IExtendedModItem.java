@@ -2,7 +2,9 @@
 package eu.usrv.yamcore.iface;
 
 
-public interface IExtendedModItem<T>
+import net.minecraft.item.Item;
+
+public interface IExtendedModItem<T extends Item>
 {
   T getConstructedItem();
 

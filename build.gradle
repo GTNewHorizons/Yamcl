@@ -2,16 +2,20 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = "gt"
+            url = "https://gregtech.overminddl1.com/"
         }
         maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = "jitpack.io"
+            url = "https://jitpack.io"
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'com.github.GTNH2:ForgeGradle:FG_1.2-SNAPSHOT'
     }
 }
 
@@ -27,19 +31,26 @@ file "build.properties" withReader {
 
 allprojects {
     apply plugin: 'java'
-	compileJava.options.encoding = 'UTF-8'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    compileJava.options.encoding = "UTF-8"
 }
 
 version = "${config.minecraft.version}-${config.yamcore.version}"
 group= "eu.usrv" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "YAMCore"
 
+repositories {
+    maven {
+        name = "gt"
+        url = "https://gregtech.overminddl1.com/"
+    }
+}
+
 minecraft {
-    version = "${config.forge.version}"
+    version = "${config.minecraft.version}-${config.forge.version}"
     runDir = "eclipse"
-	
+
     replaceIn "src/main/java/eu/usrv/yamcore/YAMCore.java"
 	def versionArray = project.version.tokenize('-')
 	if (versionArray.size() == 3)
@@ -50,7 +61,6 @@ minecraft {
 	{
 		replace "GRADLETOKEN_VERSION", versionArray[1]
 	}
-    
 }
 
 dependencies {
