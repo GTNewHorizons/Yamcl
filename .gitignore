@@ -15,3 +15,8 @@ YAMCL_test.iml
 YAMCL.iml
 YAMCL.ipr
 YAMCL_api.iml
+*.bat
+Yamcore.iml
+Yamcore.ipr
+Yamcore.iws
+out/
