@@ -23,15 +23,14 @@ import eu.usrv.yamcore.proxy.CommonProxy;
  * @author Namikon
  * 
  */
-@Mod( modid = "YAMCore", name = "YAMCore", version = "GRADLETOKEN_VERSION" )
+@Mod( modid = "YAMCore", name = "YAMCore", version = "GRADLETOKEN_VERSION")
 public class YAMCore
 {
-  private static String tVersion = "GRADLETOKEN_VERSION";
   private static boolean tDebugFilePresent = false;
 
   public static boolean isDebug()
   {
-    return ( tVersion.length() == 20 ) || tDebugFilePresent;
+    return tDebugFilePresent;
   }
 
   private LogHelper _mLogger = new LogHelper( "Yamcl" );

@@ -1,10 +1,10 @@
 [
 {
-  "modid": "YAMCore",
-  "name": "YAMCore",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "Yet another ModdingCore, for all your general-purpose modding needs",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "url": "",
   "updateUrl": "",
   "authorList": [
