@@ -1,10 +1,8 @@
 
 package eu.usrv.yamcore.auxiliary.enums;
 
-
-public enum ItemRecipeBehaviorEnum
-{
-  Consume,
-  NoConsume,
-  NoConsumeLeaveInGrid
+public enum ItemRecipeBehaviorEnum {
+    Consume,
+    NoConsume,
+    NoConsumeLeaveInGrid
 }

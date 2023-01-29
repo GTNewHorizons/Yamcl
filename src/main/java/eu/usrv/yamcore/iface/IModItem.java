@@ -1,18 +1,16 @@
 
 package eu.usrv.yamcore.iface;
 
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
+public interface IModItem {
 
-public interface IModItem
-{
-  Item getConstructedItem();
+    Item getConstructedItem();
 
-  String getUnlocItemName();
+    String getUnlocItemName();
 
-  void setCreativeTab( CreativeTabs pTab );
+    void setCreativeTab(CreativeTabs pTab);
 
-  String getCreativeTabName();
+    String getCreativeTabName();
 }

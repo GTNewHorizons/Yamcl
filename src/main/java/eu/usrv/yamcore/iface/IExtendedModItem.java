@@ -1,14 +1,13 @@
 
 package eu.usrv.yamcore.iface;
 
-
 import net.minecraft.item.Item;
 
-public interface IExtendedModItem<T extends Item>
-{
-  T getConstructedItem();
+public interface IExtendedModItem<T extends Item> {
 
-  String getUnlocalizedNameForRegistration();
+    T getConstructedItem();
 
-  String getCreativeTabName();
+    String getUnlocalizedNameForRegistration();
+
+    String getCreativeTabName();
 }
