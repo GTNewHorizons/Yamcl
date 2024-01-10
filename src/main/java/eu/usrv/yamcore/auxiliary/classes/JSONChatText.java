@@ -9,6 +9,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
 import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 
 /**

@@ -4,6 +4,7 @@ package eu.usrv.yamcore.auxiliary.classes;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.google.gson.JsonObject;
+
 import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 
 public class JSONHoverEvent {
