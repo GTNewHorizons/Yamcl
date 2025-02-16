@@ -43,8 +43,8 @@ public class PlayerHelper {
         try {
             pEntityPlayer.capabilities.disableDamage = false;
             pEntityPlayer.sendPlayerAbilities();
-            if (pNotifyPlayer)
-                PlayerChatHelper.SendNotifyWarning(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.remove"));
+            if (pNotifyPlayer) PlayerChatHelper
+                    .SendNotifyWarning(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.remove"));
         } catch (Exception e) {
             YAMCore.instance.getLogger().error("RemoveProtection failed to Remove player's protection");
             YAMCore.instance.getLogger().DumpStack(e);
@@ -61,8 +61,8 @@ public class PlayerHelper {
         try {
             pEntityPlayer.capabilities.disableDamage = true;
             pEntityPlayer.sendPlayerAbilities();
-            if (pNotifyPlayer)
-                PlayerChatHelper.SendNotifyPositive(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.give"));
+            if (pNotifyPlayer) PlayerChatHelper
+                    .SendNotifyPositive(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.give"));
         } catch (Exception e) {
             YAMCore.instance.getLogger().error("RemoveProtection failed to give a player protection");
             YAMCore.instance.getLogger().DumpStack(e);
