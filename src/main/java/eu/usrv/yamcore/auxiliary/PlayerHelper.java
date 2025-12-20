@@ -2,7 +2,9 @@
 package eu.usrv.yamcore.auxiliary;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -43,8 +45,9 @@ public class PlayerHelper {
         try {
             pEntityPlayer.capabilities.disableDamage = false;
             pEntityPlayer.sendPlayerAbilities();
-            if (pNotifyPlayer) PlayerChatHelper
-                    .SendNotifyWarning(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.remove"));
+            if (pNotifyPlayer) pEntityPlayer.addChatMessage(
+                    new ChatComponentTranslation("yamcore.char.protection.remove")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
         } catch (Exception e) {
             YAMCore.instance.getLogger().error("RemoveProtection failed to Remove player's protection");
             YAMCore.instance.getLogger().DumpStack(e);
@@ -61,8 +64,9 @@ public class PlayerHelper {
         try {
             pEntityPlayer.capabilities.disableDamage = true;
             pEntityPlayer.sendPlayerAbilities();
-            if (pNotifyPlayer) PlayerChatHelper
-                    .SendNotifyPositive(pEntityPlayer, StatCollector.translateToLocal("yamcore.char.protection.give"));
+            if (pNotifyPlayer) pEntityPlayer.addChatMessage(
+                    new ChatComponentTranslation("yamcore.char.protection.give")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GREEN)));
         } catch (Exception e) {
             YAMCore.instance.getLogger().error("RemoveProtection failed to give a player protection");
             YAMCore.instance.getLogger().DumpStack(e);
